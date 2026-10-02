@@ -1,0 +1,11 @@
+---
+nginx_package: nginx
+git_package: git
+web_service: nginx
+
+project_directory: /opt/devops-project
+project_owner: ec2-user
+project_group: ec2-user
+project_file: /opt/devops-project/info.txt
+
+deployment_environment: learning
