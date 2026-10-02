@@ -1,7 +1,7 @@
 ```markdown
 # Ansible Server Configuration
 
-Automated web server configuration using **Ansible**, **AWS EC2**, **Nginx**, and reusable Ansible roles.
+Automated web server configuration using Ansible, AWS EC2, Nginx, and reusable Ansible roles.
 
 ## Overview
 
@@ -12,6 +12,10 @@ The project evolved from a basic Ansible playbook into a reusable role-based str
 ### Deployment Flow
 
 ```text
+Terraform
+   |
+   | Provisions AWS EC2
+   ▼
 AWS EC2
    │
    │ SSH
@@ -28,7 +32,7 @@ webserver Role
    └── Create application information file
    │
    ▼
-Nginx Web Server
+Running Nginx Web Server
 ```
 
 ## Technologies Used
@@ -42,7 +46,7 @@ Nginx Web Server
 - Jinja2
 - Git
 - GitHub
-- Terraform
+-Terraform
 
 ## Project Structure
 
