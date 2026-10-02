@@ -1,0 +1,55 @@
+---
+- name: Update installed packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+
+- name: Install required packages
+  ansible.builtin.dnf:
+    name:
+      - "{{ nginx_package }}"
+      - "{{ git_package }}"
+    state: present
+
+- name: Enable and start nginx
+  ansible.builtin.service:
+    name: "{{ web_service }}"
+    state: started
+    enabled: true
+
+- name: Configure nginx
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/conf.d/devops-project.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload nginx
+
+- name: Deploy custom webpage
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /usr/share/nginx/html/index.html
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Create project directory
+  ansible.builtin.file:
+    path: "{{ project_directory }}"
+    state: directory
+    owner: "{{ project_owner }}"
+    group: "{{ project_group }}"
+    mode: "0755"
+
+- name: Create application information file
+  ansible.builtin.copy:
+    dest: "{{ project_file }}"
+    content: |
+      Ansible Server Configuration Project
+      Managed by Ansible
+      Environment: {{ deployment_environment }}
+      Host: {{ inventory_hostname }}
+    owner: "{{ project_owner }}"
+    group: "{{ project_group }}"
+    mode: "0644"
